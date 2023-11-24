@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "3aw"
+version = "0.1.0"
+description = "3AW - Web Application Firewall"
+authors = ["Nassim Tabchiche <n.tabchiche2@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.2.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
