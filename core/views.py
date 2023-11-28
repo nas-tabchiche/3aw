@@ -2,9 +2,19 @@ from django.core.exceptions import PermissionDenied
 from revproxy.views import ProxyView
 from revproxy.response import get_django_response
 
-from waf.settings import UPSTREAM
+from waf.settings import UPSTREAM, DEBUG
 from .models import Policy
 import re
+
+import logging
+import ecs_logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
+
+handler = logging.StreamHandler()
+handler.setFormatter(ecs_logging.StdlibFormatter())
+logger.addHandler(handler)
 
 
 class TestProxyView(ProxyView):
@@ -44,13 +54,14 @@ class TestProxyView(ProxyView):
         return action_handlers.get(policy.action)()
 
     def block_request(self):
+        logger.info(f"BLOCKED REQUEST: {self.request}")
         raise PermissionDenied()
 
     def alert_request(self, policy: Policy):
-        print("ALERT: %s" % policy)
+        logger.error(f"ALERT: {policy}")
 
     def log_request(self, policy: Policy):
-        print("LOG: %s" % policy)
+        logger.info(f"LOG: {policy}")
 
     def handle_request(self):
         active_policies = Policy.objects.filter(is_active=True)

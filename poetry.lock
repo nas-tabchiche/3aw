@@ -53,6 +53,20 @@ diazo = ["diazo (>=1.0.5)", "lxml (>=3.4)"]
 tests = ["coverage", "diazo", "flake8", "lxml (>=3.4)"]
 
 [[package]]
+name = "ecs-logging"
+version = "2.1.0"
+description = "Logging formatters for ECS (Elastic Common Schema) in Python"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "ecs_logging-2.1.0-py3-none-any.whl", hash = "sha256:02581a56b7fc6cbae2de121a4a398ba3bd73d7bb2d67cd029a8a03df0b144098"},
+    {file = "ecs_logging-2.1.0.tar.gz", hash = "sha256:222cc158d4331157d128bc903629010f7724eab8ba4b642efbffd0cb482f4cde"},
+]
+
+[package.extras]
+develop = ["elastic-apm", "mock", "pytest", "pytest-cov", "structlog"]
+
+[[package]]
 name = "sqlparse"
 version = "0.4.4"
 description = "A non-validating SQL parser."
@@ -98,4 +112,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "4587917376783c18d96dabc5e8018d2edbdd7cf259e38ec275349e8c597082d7"
+content-hash = "62e659f6daad47e3511916c5e2fbc47c788c17ebaa0ca2704334f5176ffe6b83"
