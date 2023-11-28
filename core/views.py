@@ -2,12 +2,13 @@ from django.core.exceptions import PermissionDenied
 from revproxy.views import ProxyView
 from revproxy.response import get_django_response
 
+from waf.settings import UPSTREAM
 from .models import Policy
 import re
 
 
 class TestProxyView(ProxyView):
-    upstream = "http://example.com"
+    upstream = UPSTREAM
 
     def get_policy_variable(self, policy: Policy) -> str:
         if policy.variable == "host":

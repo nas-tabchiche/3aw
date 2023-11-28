@@ -28,6 +28,9 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "ON"
 
 ALLOWED_HOSTS = []
 
+# Proxy settings
+UPSTREAM = os.environ["UPSTREAM"]
+
 
 # Application definition
 
