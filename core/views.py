@@ -2,19 +2,14 @@ from django.core.exceptions import PermissionDenied
 from revproxy.views import ProxyView
 from revproxy.response import get_django_response
 
-from waf.settings import UPSTREAM, DEBUG
+from waf.settings import UPSTREAM, DEBUG, LOGSTASH_HOST, LOGSTASH_PORT
 from .models import Policy
 import re
 
 import logging
-import ecs_logging
+from logstash_async.handler import AsynchronousLogstashHandler
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
-
-handler = logging.StreamHandler()
-handler.setFormatter(ecs_logging.StdlibFormatter())
-logger.addHandler(handler)
+logger = logging.getLogger("django.request")
 
 
 class TestProxyView(ProxyView):
@@ -88,6 +83,4 @@ class TestProxyView(ProxyView):
             strict_cookies=self.strict_cookies,
             streaming_amount=self.streaming_amount,
         )
-
-        print("RESPONSE RETURNED: %s", response)
         return response
