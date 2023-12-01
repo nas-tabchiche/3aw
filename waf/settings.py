@@ -31,6 +31,50 @@ ALLOWED_HOSTS = []
 # Proxy settings
 UPSTREAM = os.environ["UPSTREAM"]
 
+# Logstash settings
+LOGSTASH_HOST = os.environ["LOGSTASH_HOST"]
+LOGSTASH_PORT = int(os.environ["LOGSTASH_PORT"])
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "logstash": {
+            "()": "logstash_async.formatter.DjangoLogstashFormatter",
+            "message_type": "python-logstash",
+            "extra_prefix": "dev",
+            "extra": {
+                "application": "core",
+                "project_path": "BASE_DIR",
+                "environment": "production" if not DEBUG else "development",
+            },
+        },
+    },
+    "handlers": {
+        "logstash": {
+            "level": "INFO",
+            "class": "logstash_async.handler.SynchronousLogstashHandler",
+            "formatter": "logstash",
+            "transport": "logstash_async.transport.TcpTransport",
+            "host": "localhost",
+            "port": 50000,
+            # "ssl_enable": True,
+            # "ssl_verify": True,
+            # "ca_certs": "etc/ssl/certs/logstash_ca.crt",
+            # "certfile": "/etc/ssl/certs/logstash.crt",
+            # "keyfile": "/etc/ssl/private/logstash.key",
+            "database_path": "{}/logstash.db".format(BASE_DIR),
+        },
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["logstash"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+}
+
 
 # Application definition
 
