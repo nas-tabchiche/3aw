@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.11"
 Django = "^4.2.7"
 django-revproxy = "^0.12.0"
-ecs-logging = "^2.1.0"
+python-logstash-async = "^2.7.2"
 
 
 [build-system]
