@@ -11,6 +11,8 @@ RUN pip install --upgrade pip
 RUN pip install poetry
 RUN poetry install
 
+RUN poetry run python manage.py migrate
+
 COPY ./* /code/
 
 ENTRYPOINT ["poetry", "run", "python", "manage.py", "runserver"]
